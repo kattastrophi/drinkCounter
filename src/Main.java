@@ -8,9 +8,9 @@ import java.io.FileNotFoundException;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("C:\\Users\\User\\Desktop\\beercount.txt");
         try{
-            File file = new File("C:\\Users\\solow\\OneDrive\\Documents\\beercount.txt");
             if(file.createNewFile()){
                 System.out.println("File created: " + file.getName());
             }
@@ -31,7 +31,7 @@ public class Main {
         System.out.println(beerCount);
 
         try{
-            FileWriter writer = new FileWriter("C:\\Users\\solow\\OneDrive\\Documents\\beercount.txt", true);
+            FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\beercount.txt", true);
             writer.write(date + " " + beerCount + " beers drank." + "\n");
             writer.flush();
             writer.close();
@@ -41,6 +41,11 @@ public class Main {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
+        Scanner readFile = new Scanner(file);
+        while (readFile.hasNextLine()){
+            String output = readFile.nextLine();
+            System.out.println(output);
+        }
+        readFile.close();
     }
 }
