@@ -8,33 +8,79 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        String location;
-        LocalDate dateOfDrinks = LocalDate.now();
-        Scanner scanner = new Scanner(System.in);
-        File newFile;
-        System.out.println("Welcome to the beer counter!");
-        Thread.sleep(800);
-        System.out.println("Let's create a file to keep track of your habits.");
-        Thread.sleep(800);
-        System.out.println("Choose a location to save your drinking habits:");
-        Thread.sleep(500);
-        location = FileSaveLocation.Directory();
-        try {
-            while(true){
-            System.out.println("Please enter a name for the file. (Note this is already a 'txt' file. Do not include file extensions in name.)");
-            String answer = scanner.nextLine();
-            newFile = new File(location,  answer +".txt");
-            if (newFile.createNewFile()) {
-                System.out.println("Drinking habits text file created @: " + newFile.getAbsolutePath());
-                break;
-            } else {
-                System.out.println("File already exists.");
+        File file = null;
+        LocalDate now =  LocalDate.now();
+        Scanner newScan = new Scanner(System.in);
+        System.out.println("Welcome to beer counter!");
+        String filePathLT = "C:\\Users\\solow\\OneDrive\\Desktop";
+        Sleep.Wait(1);
+        System.out.println("Making text file to track drinking habits.");
+        Sleep.Wait(1);
+        System.out.println("Please select a location to save your file.");
+        Sleep.Wait(1);
+        System.out.println("1.Desktop\n2.Laptop");
+        int reply = newScan.nextInt();
+        newScan.nextLine();
+        if(reply == 1){
+            try {
+                file = new File("C:\\Users\\User\\Desktop\\DrinkingHabits.txt");
+                if (file.createNewFile()) {
+                    System.out.println("File created: " + file.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred. File system not found.");
+                e.printStackTrace();
             }
+
+        } else if (reply == 2){
+            try {
+                file = new File("C:\\Users\\solow\\OneDrive\\Desktop\\DrinkingHabits.txt");
+                if (file.createNewFile()) {
+                    System.out.println("File created: " + file.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred. File system not found.");
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        } else {
+            System.out.println("File creation cancelled.");
+            System.exit(69);
+        }
+        if(file.exists()){
+            System.out.println("Did you drink today?");
+            String answer = newScan.nextLine();
+            if(answer.equalsIgnoreCase("yes")) {
+                System.out.println("How many drinks did you have?");
+                int amount = newScan.nextInt();
+                if (reply == 1) {
+                    try {
+                        FileWriter myWriter = new FileWriter("C:\\Users\\User\\Desktop\\DrinkingHabits.txt", true);
+                        myWriter.write("On " + now + " you drank " + amount + " beers.");
+                        myWriter.close();
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    try {
+                        FileWriter myWriter = new FileWriter("C:\\Users\\solow\\OneDrive\\Desktop\\DrinkingHabits.txt", true);
+                        myWriter.write("On " + now + " you drank " + amount + " beers.");
+                        myWriter.close();
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }
+
 
