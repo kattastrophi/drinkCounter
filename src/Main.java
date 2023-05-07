@@ -59,7 +59,7 @@ public class Main {
                 if (reply == 1) {
                     try {
                         FileWriter myWriter = new FileWriter("C:\\Users\\User\\Desktop\\DrinkingHabits.txt", true);
-                        myWriter.write("On " + now + " you drank " + amount + " beers.");
+                        myWriter.write("On " + now + " you drank " + amount + " beers." + "\n");
                         myWriter.close();
                         System.out.println("Successfully wrote to the file.");
                     } catch (IOException e) {
@@ -70,7 +70,7 @@ public class Main {
                 else {
                     try {
                         FileWriter myWriter = new FileWriter("C:\\Users\\solow\\OneDrive\\Desktop\\DrinkingHabits.txt", true);
-                        myWriter.write("On " + now + " you drank " + amount + " beers.");
+                        myWriter.write("On " + now + " you drank " + amount + " beers." + "\n");
                         myWriter.close();
                         System.out.println("Successfully wrote to the file.");
                     } catch (IOException e) {
