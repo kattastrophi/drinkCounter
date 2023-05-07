@@ -5,23 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-
+import java.lang.String;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         File file = new File("C:\\Users\\User\\Desktop\\beercount.txt");
-        try{
-            if(file.createNewFile()){
-                System.out.println("File created: " + file.getName());
-            }
-            else{
-                System.out.println("File already exists.");
-            }
-        }
-        catch(IOException ioe){
-            System.out.println("An error occurred.");
-            ioe.printStackTrace();
-        }
         Scanner scanner = new Scanner(System.in);
         String date = String.valueOf(java.time.LocalDate.now());
         System.out.println(date);
@@ -29,23 +17,46 @@ public class Main {
         int beerCount = scanner.nextInt();
         scanner.nextLine();
         System.out.println(beerCount);
+        if(file.exists()){
+            try{
+                FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\beercount.txt", true);
+                writer.write(date + " " + beerCount + " beers drank." + "\n");
+                writer.flush();
+                writer.close();
+                System.out.println("Added beer drinking entries to the file.");
+            }
+            catch(IOException e){
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+            try {
+                Scanner readFile = new Scanner(file);
+                while (readFile.hasNextLine()) {
+                    String output = readFile.nextLine();
+                    System.out.println(output);
+                }
+                readFile.close();
+            }
+            catch(FileNotFoundException e){
+                System.out.println("File not found.");
+                e.printStackTrace();
+            }
+        }
+        else {
+          try{
+              file.createNewFile();
+              System.out.println("Filed created: " + file.getName());
+              FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\beercount.txt", true);
+              writer.write(date + " " + beerCount + " beers drank." + "\n");
+              writer.flush();
+              writer.close();
+              System.out.println("Added beer drinking entries to the file.");
+          }
+          catch(IOException ioe){
+              System.out.println("An error occurred.");
+              ioe.printStackTrace();
+            }
+        }
 
-        try{
-            FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\beercount.txt", true);
-            writer.write(date + " " + beerCount + " beers drank." + "\n");
-            writer.flush();
-            writer.close();
-            System.out.println("Added beer drinking entries to the file.");
-        }
-        catch(IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        Scanner readFile = new Scanner(file);
-        while (readFile.hasNextLine()){
-            String output = readFile.nextLine();
-            System.out.println(output);
-        }
-        readFile.close();
     }
 }
